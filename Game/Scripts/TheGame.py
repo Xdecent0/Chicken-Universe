@@ -4,6 +4,7 @@ from GameObjects.GameObject import Player, Obstacle, Coin
 from Data.GameData import GameData
 
 game_data = GameData()
+game_data.load()
 
 class FlyingObjectGame:
     def __init__(self, root, start_game_callback):
@@ -23,18 +24,28 @@ class FlyingObjectGame:
         self.button_frame = tk.Frame(root)
         self.button_frame.pack(side="top")
 
-        self.back_button = tk.Button(self.button_frame, text="Back", command=self.go_back, width=10, height=2, font=("Helvetica", 12))
+        score_icon = tk.PhotoImage(file="./Assets/icons/score.png")
+        heart_icon = tk.PhotoImage(file="./Assets/icons/heart.png")
+        back_icon = tk.PhotoImage(file="./Assets/icons/back.png")
+        coin_icon = tk.PhotoImage(file="./Assets/Obstacle/coin.png")
+
+        self.back_button = tk.Button(self.button_frame, text="Back", command=self.go_back, width=40, height=40, image = back_icon, font=("Helvetica", 12))
+        self.back_button.image = back_icon
         self.back_button.pack(side="left", padx=10, pady=10)
 
         self.score = 0
-        self.score_label = tk.Label(self.button_frame, text=f"Score: {self.score}", font=("Helvetica", 18))
+        self.score_label = tk.Label(self.button_frame, text=f"Score: {self.score}", font=("Helvetica", 18), image=score_icon, compound="left")
+        self.score_label.image = score_icon  # Здесь устанавливаем изображение
         self.score_label.pack(side="left", padx=10, pady=10)
 
-        self.lives_label = tk.Label(self.button_frame, text="Lives: 2", font=("Helvetica", 18))
+        self.lives_label = tk.Label(self.button_frame, text="Lives: 2", font=("Helvetica", 18), image=heart_icon, compound="left")
+        self.lives_label.image = heart_icon  # Здесь устанавливаем изображение
         self.lives_label.pack(side="left", padx=10, pady=10)
 
-        self.coins_label = tk.Label(self.button_frame, text=f"Coins: {game_data.coins}", font=("Helvetica", 18))
+        self.coins_label = tk.Label(self.button_frame, text=f"Coins: {game_data.coins}", font=("Helvetica", 18), image=coin_icon, compound="left")
+        self.coins_label.image = coin_icon  # Здесь устанавливаем изображение
         self.coins_label.pack(side="left", padx=10, pady=10)
+
 
         self.obstacles = []
         self.coins = []
@@ -43,6 +54,8 @@ class FlyingObjectGame:
         self.spawn_coin()
 
     def go_back(self):
+        game_data.save()
+        game_data.load()
         self.root.destroy()
         main_menu = MainMenu(root, start_game)
 

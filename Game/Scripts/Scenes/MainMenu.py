@@ -2,6 +2,7 @@ import tkinter as tk
 from Data.GameData import GameData
 
 game_data = GameData()
+game_data.load()
 
 class MainMenu:
     def __init__(self, root, start_game_callback):
@@ -56,9 +57,9 @@ class MainMenu:
         self.start_game_callback()
 
     def reset_player(self):
-        # Действие, которое происходит при нажатии на кнопку сброса
-        pass
+        game_data.reset()  
+        game_data.save()
 
     def open_settings(self):
-        # Действие, которое происходит при нажатии на кнопку настроек
         pass
+
