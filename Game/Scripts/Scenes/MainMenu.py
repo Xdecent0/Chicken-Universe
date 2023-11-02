@@ -2,7 +2,6 @@ import tkinter as tk
 from Data.GameData import GameData
 
 game_data = GameData()
-game_data.load()
 
 class MainMenu:
     def __init__(self, root, start_game_callback):
@@ -22,11 +21,14 @@ class MainMenu:
         left_frame = tk.Frame(self.main_frame, bg="purple")
         left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        highscore_label = tk.Label(left_frame, text=f"Highscore: {game_data.highscore}", font=("Helvetica", 24), bg="purple", fg="white")
-        highscore_label.pack(padx=20, pady=50, fill=tk.BOTH)
+        game_data.load()
 
-        coins_label = tk.Label(left_frame, text=f"Coins: {game_data.coins}", font=("Helvetica", 24), bg="purple", fg="white")
-        coins_label.pack(padx=20, fill=tk.BOTH)
+        self.highscore_label = tk.Label(left_frame, text=f"Highscore: {game_data.highscore}", font=("Helvetica", 24), bg="purple", fg="white")
+        self.highscore_label.pack(padx=20, pady=50, fill=tk.BOTH)
+
+        self.coins_label = tk.Label(left_frame, text=f"Coins: {game_data.coins}", font=("Helvetica", 24), bg="purple", fg="white")
+        self.coins_label.pack(padx=20, fill=tk.BOTH)
+
 
         right_frame = tk.Frame(self.main_frame, bg="purple")
         right_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -57,8 +59,13 @@ class MainMenu:
         self.start_game_callback()
 
     def reset_player(self):
-        game_data.reset()  
+        game_data.reset()
         game_data.save()
+        self.update_player()
+
+    def update_player(self):
+        self.highscore_label.config(text=f"Highscore: {game_data.highscore}")
+        self.coins_label.config(text=f"Coins: {game_data.coins}")
 
     def open_settings(self):
         pass
