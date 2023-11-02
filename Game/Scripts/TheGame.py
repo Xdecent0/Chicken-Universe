@@ -35,15 +35,15 @@ class FlyingObjectGame:
 
         self.score = 0
         self.score_label = tk.Label(self.button_frame, text=f"Score: {self.score}", font=("Helvetica", 18), image=score_icon, compound="left")
-        self.score_label.image = score_icon  # Здесь устанавливаем изображение
+        self.score_label.image = score_icon
         self.score_label.pack(side="left", padx=10, pady=10)
 
         self.lives_label = tk.Label(self.button_frame, text="Lives: 2", font=("Helvetica", 18), image=heart_icon, compound="left")
-        self.lives_label.image = heart_icon  # Здесь устанавливаем изображение
+        self.lives_label.image = heart_icon
         self.lives_label.pack(side="left", padx=10, pady=10)
 
         self.coins_label = tk.Label(self.button_frame, text=f"Coins: {game_data.coins}", font=("Helvetica", 18), image=coin_icon, compound="left")
-        self.coins_label.image = coin_icon  # Здесь устанавливаем изображение
+        self.coins_label.image = coin_icon
         self.coins_label.pack(side="left", padx=10, pady=10)
 
 

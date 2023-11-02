@@ -1,8 +1,6 @@
 import tkinter as tk
 from Data.GameData import GameData
 
-game_data = GameData()
-
 class MainMenu:
     def __init__(self, root, start_game_callback):
         self.root = root
@@ -18,55 +16,63 @@ class MainMenu:
         button_height = 60
         button_font = ("Helvetica", 16)
 
-        left_frame = tk.Frame(self.main_frame, bg="purple")
+        left_frame = tk.Frame(self.main_frame, bg="purple")  # Левый фрейм с фоном такого же цвета
         left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
+        game_data = GameData()
         game_data.load()
 
-        self.highscore_label = tk.Label(left_frame, text=f"Highscore: {game_data.highscore}", font=("Helvetica", 24), bg="purple", fg="white")
-        self.highscore_label.pack(padx=20, pady=50, fill=tk.BOTH)
-
-        self.coins_label = tk.Label(left_frame, text=f"Coins: {game_data.coins}", font=("Helvetica", 24), bg="purple", fg="white")
-        self.coins_label.pack(padx=20, fill=tk.BOTH)
-
+        self.create_labels(left_frame, game_data.highscore, game_data.coins)
 
         right_frame = tk.Frame(self.main_frame, bg="purple")
         right_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
 
         start_icon = tk.PhotoImage(file="./Assets/icons/play.png")
         settings_icon = tk.PhotoImage(file="./Assets/icons/shop.png")
         reset_icon = tk.PhotoImage(file="./Assets/icons/reset.png")
         exit_icon = tk.PhotoImage(file="./Assets/icons/exit.png")
 
-        start_button = tk.Button(right_frame, text="Start Game", command=self.start_game, width=button_width, height=button_height, font=button_font, image=start_icon, compound="left")
-        start_button.image = start_icon
-        start_button.pack(side=tk.TOP, pady=90)
+        self.create_button(right_frame, "Start Game", self.start_game, start_icon, button_width, button_height)
+        self.create_button(right_frame, "Shop", self.open_shop, settings_icon, button_width, button_height)
+        self.create_button(right_frame, "Reset Progress", self.reset_player, reset_icon, button_width, button_height)
+        self.create_button(right_frame, "Exit", root.quit, exit_icon, button_width, button_height)
 
-        settings_button = tk.Button(right_frame, text="Shop", command=self.open_settings, width=button_width, height=button_height, font=button_font, image=settings_icon, compound="left")
-        settings_button.image = settings_icon
-        settings_button.pack(side=tk.TOP, pady=90)
+    def create_labels(self, frame, highscore, coins):
+        labels_frame = tk.Frame(frame, bg="darkviolet")
+        labels_frame.pack(padx=20, pady=90, fill=tk.BOTH)
 
-        reset_button = tk.Button(right_frame, text="Reset Progress", command=self.reset_player, width=button_width, height=button_height, font=button_font, image=reset_icon, compound="left")
-        reset_button.image = reset_icon
-        reset_button.pack(side=tk.TOP, pady=90)
+        highscore_icon = tk.PhotoImage(file="./Assets/icons/score.png")
+        coin_icon = tk.PhotoImage(file="./Assets/Obstacle/coin.png")
 
-        exit_button = tk.Button(right_frame, text="Exit", command=root.quit, width=button_width, height=button_height, font=button_font, image=exit_icon, compound="left")
-        exit_button.image = exit_icon
-        exit_button.pack(side=tk.TOP, pady=90)
+        self.highscore_label = tk.Label(labels_frame, text=f"Highscore: {highscore}", font=("Helvetica", 24), fg="black", bg="darkviolet", image=highscore_icon, compound="left")
+        self.highscore_label.image = highscore_icon
+        self.highscore_label.pack(pady=90, fill=tk.BOTH)
+
+        self.coins_label = tk.Label(labels_frame, text=f"Coins: {coins}", font=("Helvetica", 24), fg="black", bg="darkviolet", image=coin_icon, compound="left")
+        self.coins_label.image = coin_icon
+        self.coins_label.pack(pady=90, fill=tk.BOTH)
+
+    def create_button(self, frame, text, command, image, width, height):
+        button = tk.Button(frame, text=text, command=command, width=width, height=height, font=("Helvetica", 16), image=image, compound="left")
+        button.image = image
+        button.pack(pady=90)
 
     def start_game(self):
         self.main_frame.destroy()
         self.start_game_callback()
 
     def reset_player(self):
+        game_data = GameData()
         game_data.reset()
         game_data.save()
         self.update_player()
 
     def update_player(self):
+        game_data = GameData()
+        game_data.load()
         self.highscore_label.config(text=f"Highscore: {game_data.highscore}")
         self.coins_label.config(text=f"Coins: {game_data.coins}")
 
-    def open_settings(self):
+    def open_shop(self):
         pass
-
