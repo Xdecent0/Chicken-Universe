@@ -34,7 +34,6 @@ class MainMenu:
         exit_icon = tk.PhotoImage(file="./Assets/icons/exit.png")
 
         self.create_button(right_frame, "Start Game", self.start_game, start_icon, button_width, button_height)
-        self.create_button(right_frame, "Shop", self.open_shop, settings_icon, button_width, button_height)
         self.create_button(right_frame, "Reset Progress", self.reset_player, reset_icon, button_width, button_height)
         self.create_button(right_frame, "Exit", root.quit, exit_icon, button_width, button_height)
 
