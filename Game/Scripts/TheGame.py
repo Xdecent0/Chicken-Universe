@@ -2,6 +2,7 @@ import tkinter as tk
 from Scenes.MainMenu import MainMenu
 from GameObjects.GameObject import Player, Obstacle, Coin
 from Data.GameData import GameData
+import random
 
 game_data = GameData()
 game_data.load()
@@ -29,7 +30,7 @@ class FlyingObjectGame:
         back_icon = tk.PhotoImage(file="./Assets/icons/back.png")
         coin_icon = tk.PhotoImage(file="./Assets/Obstacle/coin.png")
 
-        self.back_button = tk.Button(self.button_frame, text="Back", command=self.go_back, width=40, height=40, image = back_icon, font=("Helvetica", 12))
+        self.back_button = tk.Button(self.button_frame, text="Back", command=self.go_back, width=40, height=40, image=back_icon, font=("Helvetica", 12))
         self.back_button.image = back_icon
         self.back_button.pack(side="left", padx=10, pady=10)
 
@@ -46,12 +47,10 @@ class FlyingObjectGame:
         self.coins_label.image = coin_icon
         self.coins_label.pack(side="left", padx=10, pady=10)
 
-
         self.obstacles = []
         self.coins = []
         self.game_over = False
-        self.spawn_obstacle()
-        self.spawn_coin()
+        self.spawn_object()
 
     def go_back(self):
         game_data.save()
@@ -59,20 +58,18 @@ class FlyingObjectGame:
         self.root.destroy()
         main_menu = MainMenu(root, start_game)
 
-    def spawn_obstacle(self):
+    def spawn_object(self):
         if not self.game_over:
-            obstacle = Obstacle(self.canvas)
-            self.obstacles.append(obstacle)
-            self.player.score += 1
-            self.score_label.config(text=f"Score: {self.player.score}")
-        self.root.after(1000, self.spawn_obstacle)
-    
-    def spawn_coin(self):
-        if not self.game_over:
-            coin = Coin(self.canvas)
-            self.coins.append(coin)
-            self.root.after(3300, self.spawn_coin)
-
+            probability = random.randint(1, 4)
+            if probability == 1:
+                coin = Coin(self.canvas)
+                self.coins.append(coin)
+            else:
+                obstacle = Obstacle(self.canvas)
+                self.obstacles.append(obstacle)
+                self.player.score += 1
+                self.score_label.config(text=f"Score: {self.player.score}")
+            self.root.after(1000, self.spawn_object)
 
     def move_obstacles(self):
         if not self.game_over:
@@ -127,7 +124,7 @@ class FlyingObjectGame:
                     self.obstacles.remove(obstacle)
                     self.player.lives -= 1
                     self.lives_label.config(text=f"Lives: {self.player.lives}")
-    
+
     def collect_coins(self):
         player_coords = self.canvas.coords(self.player.player)
         player_box = self.canvas.bbox(self.player.player)
@@ -145,17 +142,16 @@ class FlyingObjectGame:
             game_data.coins += 1
         self.coins_label.config(text=f"Coins: {game_data.coins}")
 
-
     def is_collision(self, box1, box2):
         x1, y1, x2, y2 = box1
         x3, y3, x4, y4 = box2
         return not (x2 < x3 or x4 < x1 or y2 < y3 or y4 < y1)
 
     def end_game(self):
-        global highscore 
+        global highscore
         self.game_over = True
-        if self.player.score > game_data.highscore: 
-            game_data.highscore = self.player.score  
+        if self.player.score > game_data.highscore:
+            game_data.highscore = self.player.score
         self.canvas.delete("all")
         self.canvas.create_text(500, 400, text="You Lost", font=("Helvetica", 36), fill="red")
         self.canvas.create_text(500, 450, text=f"Highscore: {game_data.highscore}", font=("Helvetica", 24), fill="blue")
@@ -163,13 +159,13 @@ class FlyingObjectGame:
 if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("1000x800")
-    
+
     def start_game():
         game_frame = tk.Frame(root, width=1000, height=800)
         game_frame.place(relx=0.5, rely=0.5, anchor="center")
         game = FlyingObjectGame(game_frame, start_game)
         game.move_obstacles_towards_player()
         game.update()
-    
+
     main_menu = MainMenu(root, start_game)
     root.mainloop()
