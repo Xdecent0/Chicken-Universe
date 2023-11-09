@@ -45,7 +45,7 @@ class Obstacle:
 
     def load_obstacle_image(self):
         image_number = random.randint(1, 5)
-        image_path = f"./Assets/Obstacle/{image_number}.png"
+        image_path = f"./Game/Assets/Obstacle/{image_number}.png"
         image = Image.open(image_path)
         photo_image = ImageTk.PhotoImage(image)
         return photo_image
@@ -67,7 +67,7 @@ class Coin:
         self.create_coin()
 
     def load_coin_image(self):
-        image_path = f"./Assets/Obstacle/coin.png"
+        image_path = f"./Game/Assets/Obstacle/coin.png"
         image = Image.open(image_path)
         photo_image = ImageTk.PhotoImage(image)
         return photo_image

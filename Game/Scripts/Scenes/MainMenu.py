@@ -32,10 +32,10 @@ class MainMenu:
         right_frame = tk.Frame(self.main_frame, bg="purple")
         right_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        start_icon = tk.PhotoImage(file="./Assets/icons/play.png")
-        settings_icon = tk.PhotoImage(file="./Assets/icons/shop.png")
-        reset_icon = tk.PhotoImage(file="./Assets/icons/reset.png")
-        exit_icon = tk.PhotoImage(file="./Assets/icons/exit.png")
+        start_icon = tk.PhotoImage(file="./Game/Assets/icons/play.png")
+        settings_icon = tk.PhotoImage(file="./Game/Assets/icons/shop.png")
+        reset_icon = tk.PhotoImage(file="./Game/Assets/icons/reset.png")
+        exit_icon = tk.PhotoImage(file="./Game/Assets/icons/exit.png")
 
         self.create_button(right_frame, "Start Game", self.start_game, start_icon, button_width, button_height)
         self.create_button(right_frame, "Shop", self.open_shop, settings_icon, button_width, button_height)
@@ -46,8 +46,8 @@ class MainMenu:
         labels_frame = tk.Frame(frame, bg="darkviolet", bd=8, relief=tk.GROOVE)
         labels_frame.pack(padx=20, pady=90, fill=tk.BOTH)
 
-        highscore_icon = tk.PhotoImage(file="./Assets/icons/score.png")
-        coin_icon = tk.PhotoImage(file="./Assets/Obstacle/coin.png")
+        highscore_icon = tk.PhotoImage(file="./Game/Assets/icons/score.png")
+        coin_icon = tk.PhotoImage(file="./Game/Assets/Obstacle/coin.png")
 
         self.highscore_label = tk.Label(labels_frame, text=f"Highscore: {highscore}", font=("Helvetica", 24), fg="black", bg="darkviolet", image=highscore_icon, compound="left")
         self.highscore_label.image = highscore_icon
@@ -101,14 +101,14 @@ class ShopMenu:
         self.shop_frame = tk.Frame(root, bg="purple")
         self.shop_frame.pack(fill=tk.BOTH, expand=True)
         
-        back_icon = tk.PhotoImage(file="./Assets/icons/back.png")
+        back_icon = tk.PhotoImage(file="./Game/Assets/icons/back.png")
         back_button = tk.Button(self.shop_frame, image=back_icon, command=self.return_to_main_menu, bg = "mediumpurple4", bd = 5, highlightcolor = "black")
         back_button.image = back_icon
         back_button.pack(anchor="nw", padx=10, pady=10)
         
         game_data = GameData()
         game_data.load()
-        coin_icon = tk.PhotoImage(file="./Assets/Obstacle/coin.png")
+        coin_icon = tk.PhotoImage(file="./Game/Assets/Obstacle/coin.png")
         coin_label = tk.Label(self.shop_frame, text=f"Coins: {game_data.coins}", font=("Helvetica", 16), image=coin_icon, compound="left", bg="purple")
         coin_label.image = coin_icon
         coin_label.pack(anchor="nw", padx=20, pady=20)
@@ -134,10 +134,10 @@ class ShopMenu:
         return button
 
     def create_shop_buttons(self):
-        buy_extra_life_icon = tk.PhotoImage(file="./Assets/icons/heart.png")
-        add_100_coins_icon = tk.PhotoImage(file="./Assets/Obstacle/coin.png")
-        buy_random_body_color_icon = tk.PhotoImage(file="./Assets/icons/random.png")
-        buy_random_outline_color_icon = tk.PhotoImage(file="./Assets/icons/random.png")
+        buy_extra_life_icon = tk.PhotoImage(file="./Game/Assets/icons/heart.png")
+        add_100_coins_icon = tk.PhotoImage(file="./Game/Assets/Obstacle/coin.png")
+        buy_random_body_color_icon = tk.PhotoImage(file="./Game/Assets/icons/random.png")
+        buy_random_outline_color_icon = tk.PhotoImage(file="./Game/Assets/icons/random.png")
 
         extra_life_price = 50
         random_body_color_price = 30

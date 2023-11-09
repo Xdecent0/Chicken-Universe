@@ -17,12 +17,12 @@ class GameData:
         self.outline_color = "black"
 
     def save(self):
-        with open("./Scripts/Data/game_data.pkl", "wb") as file:
+        with open("./Game/Scripts/Data/game_data.pkl", "wb") as file:
             pickle.dump(self, file)
 
     def load(self):
         try:
-            with open("./Scripts/Data/game_data.pkl", "rb") as file:
+            with open("./Game/Scripts/Data/game_data.pkl", "rb") as file:
                 game_data = pickle.load(file)
                 self.highscore = game_data.highscore
                 self.coins = game_data.coins
