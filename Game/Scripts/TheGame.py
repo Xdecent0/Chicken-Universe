@@ -39,7 +39,7 @@ class FlyingObjectGame:
         self.score_label.image = score_icon
         self.score_label.pack(side="left", padx=10, pady=10)
 
-        self.lives_label = tk.Label(self.button_frame, text="Lives: 2", font=("Helvetica", 18), image=heart_icon, compound="left")
+        self.lives_label = tk.Label(self.button_frame, text=f"Lives: {game_data.lives}", font=("Helvetica", 18), image=heart_icon, compound="left")
         self.lives_label.image = heart_icon
         self.lives_label.pack(side="left", padx=10, pady=10)
 

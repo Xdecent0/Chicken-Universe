@@ -1,23 +1,31 @@
 import random
 from tkinter import PhotoImage
 from PIL import Image, ImageTk
+from Data.GameData import GameData
 
+game_data = GameData()
+game_data.load()
 class Player:
     def __init__(self, canvas, color, outline_color):
         self.canvas = canvas
         self.player = None
-        self.lives = 2
+        self.lives = game_data.lives
         self.score = 0
-        self.color = color
+        self.color = game_data.player_color
+        self.outline_color = game_data.outline_color
         self.dy = 0
 
     def move_up(self, event):
         if self.canvas.coords(self.player)[1] > 0:
             self.dy = -20
+        else:
+            self.dy = 0
 
     def move_down(self, event):
         if self.canvas.coords(self.player)[3] < 800:
             self.dy = 20
+        else:
+            self.dy = 0
 
     def update(self):
         self.canvas.move(self.player, 0, self.dy)
