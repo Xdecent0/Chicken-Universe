@@ -30,7 +30,7 @@ class FlyingObjectGame:
         back_icon = tk.PhotoImage(file="./Assets/icons/back.png")
         coin_icon = tk.PhotoImage(file="./Assets/Obstacle/coin.png")
 
-        self.back_button = tk.Button(self.button_frame, text="Back", command=self.go_back, width=40, height=40, image=back_icon, font=("Helvetica", 12))
+        self.back_button = tk.Button(self.button_frame, text="Back", command=self.go_back, width=40, height=40, image=back_icon, font=("Helvetica", 12), bg = "mediumpurple4", bd = 5, highlightcolor = "black")
         self.back_button.image = back_icon
         self.back_button.pack(side="left", padx=10, pady=10)
 

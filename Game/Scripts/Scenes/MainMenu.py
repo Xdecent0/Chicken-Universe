@@ -58,7 +58,7 @@ class MainMenu:
         self.coins_label.pack(pady=90, fill=tk.BOTH)
 
     def create_button(self, frame, text, command, image, width, height):
-        button = tk.Button(frame, text=text, command=command, width=width, height=height, font=("Helvetica", 16), image=image, compound="left")
+        button = tk.Button(frame, text=text, command=command, width=width, height=height, font=("Helvetica", 16), image=image, compound="left", bg = "maroon4", bd = 5, highlightcolor = "black")
         button.image = image
         button.pack(pady=90)
 
@@ -100,14 +100,12 @@ class ShopMenu:
 
         self.shop_frame = tk.Frame(root, bg="purple")
         self.shop_frame.pack(fill=tk.BOTH, expand=True)
-
+        
         back_icon = tk.PhotoImage(file="./Assets/icons/back.png")
-        back_button = tk.Button(self.shop_frame, image=back_icon, command=self.return_to_main_menu)
+        back_button = tk.Button(self.shop_frame, image=back_icon, command=self.return_to_main_menu, bg = "mediumpurple4", bd = 5, highlightcolor = "black")
         back_button.image = back_icon
-        back_button.pack(anchor="nw", padx=20, pady=20)
-
-        self.create_shop_buttons()
-
+        back_button.pack(anchor="nw", padx=10, pady=10)
+        
         game_data = GameData()
         game_data.load()
         coin_icon = tk.PhotoImage(file="./Assets/Obstacle/coin.png")
@@ -115,6 +113,8 @@ class ShopMenu:
         coin_label.image = coin_icon
         coin_label.pack(anchor="nw", padx=20, pady=20)
         self.coin_label = coin_label
+
+        self.create_shop_buttons()
 
     def return_to_main_menu(self):
         self.root.title("Main Menu")
@@ -128,7 +128,7 @@ class ShopMenu:
         button_width = 400
         button_height = 60
 
-        button = tk.Button(frame, text=text, command=command, width=button_width, height=button_height, font=("Helvetica", 16), image=image, compound="left")
+        button = tk.Button(frame, text=text, command=command, width=button_width, height=button_height, font=("Helvetica", 16), image=image, compound="left", bg = "maroon3", bd = 5, highlightcolor = "black")
         button.image = image
         button.pack(pady=20)
         return button
@@ -136,21 +136,27 @@ class ShopMenu:
     def create_shop_buttons(self):
         buy_extra_life_icon = tk.PhotoImage(file="./Assets/icons/heart.png")
         add_100_coins_icon = tk.PhotoImage(file="./Assets/Obstacle/coin.png")
-        buy_random_body_color_icon = tk.PhotoImage(file="./Assets/icons/shop.png")
-        buy_random_outline_color_icon = tk.PhotoImage(file="./Assets/icons/score.png")
+        buy_random_body_color_icon = tk.PhotoImage(file="./Assets/icons/random.png")
+        buy_random_outline_color_icon = tk.PhotoImage(file="./Assets/icons/random.png")
 
         extra_life_price = 50
         random_body_color_price = 30
         random_outline_color_price = 40
 
-        self.buy_extra_life_button = self.create_shop_button(self.shop_frame, f"Buy Extra Life ({extra_life_price} Coins)", self.buy_extra_life, buy_extra_life_icon)
+        # Создаем фрейм для кнопок магазина
+        buttons_frame = tk.Frame(self.shop_frame, bg="purple")
+        buttons_frame.pack()
+
+        self.create_shop_button(buttons_frame, "Add 100 Coins (Cheats)", self.add_100_coins, add_100_coins_icon).pack(side="top", pady=20)
+        self.create_shop_button(buttons_frame, f"Buy Random Body Color ({random_body_color_price} Coins)", self.buy_random_body_color, buy_random_body_color_icon).pack(side="top", pady=20)
+        self.create_shop_button(buttons_frame, f"Buy Random Outline Color ({random_outline_color_price} Coins)", self.buy_random_outline_color, buy_random_outline_color_icon).pack(side="top", pady=20)
+
+        self.buy_extra_life_button = self.create_shop_button(buttons_frame, f"Buy Extra Life ({extra_life_price} Coins)", self.buy_extra_life, buy_extra_life_icon)
         if game_data.lives >= 3:
             self.buy_extra_life_button.config(state=tk.DISABLED, text="Not Available")
+        self.buy_extra_life_button.pack(side="top", pady=20)
 
 
-        self.create_shop_button(self.shop_frame, "Add 100 Coins (Cheats)", self.add_100_coins, add_100_coins_icon)
-        self.create_shop_button(self.shop_frame, f"Buy Random Body Color ({random_body_color_price} Coins)", self.buy_random_body_color, buy_random_body_color_icon)
-        self.create_shop_button(self.shop_frame, f"Buy Random Outline Color ({random_outline_color_price} Coins)", self.buy_random_outline_color, buy_random_outline_color_icon)
 
     def buy_extra_life(self):
         game_data.load()
