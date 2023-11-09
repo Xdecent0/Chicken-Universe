@@ -43,7 +43,7 @@ class MainMenu:
         self.create_button(right_frame, "Exit", root.quit, exit_icon, button_width, button_height)
 
     def create_labels(self, frame, highscore, coins):
-        labels_frame = tk.Frame(frame, bg="darkviolet")
+        labels_frame = tk.Frame(frame, bg="darkviolet", bd=8, relief=tk.GROOVE)
         labels_frame.pack(padx=20, pady=90, fill=tk.BOTH)
 
         highscore_icon = tk.PhotoImage(file="./Assets/icons/score.png")
@@ -143,7 +143,6 @@ class ShopMenu:
         random_body_color_price = 30
         random_outline_color_price = 40
 
-        # Создаем фрейм для кнопок магазина
         buttons_frame = tk.Frame(self.shop_frame, bg="purple")
         buttons_frame.pack()
 
