@@ -11,7 +11,6 @@ class MainMenu:
     def __init__(self, root, start_game_callback):
         self.root = root
         self.root.title("Main Menu")
-        self.root.attributes("-fullscreen", True)
 
         self.start_game_callback = start_game_callback
 
@@ -83,7 +82,6 @@ class MainMenu:
 
     def return_to_main_menu(self):
         self.root.title("Main Menu")
-        self.root.attributes("-fullscreen", True)
         for widget in self.root.winfo_children():
             widget.destroy()
 
@@ -93,7 +91,6 @@ class ShopMenu:
     def __init__(self, root, return_callback, start_game_callback):
         self.root = root
         self.root.title("Shop")
-        self.root.attributes("-fullscreen", True)
 
         self.return_callback = return_callback
         self.start_game_callback = start_game_callback
@@ -118,7 +115,6 @@ class ShopMenu:
 
     def return_to_main_menu(self):
         self.root.title("Main Menu")
-        self.root.attributes("-fullscreen", True)
         for widget in self.root.winfo_children():
             widget.destroy()
 
