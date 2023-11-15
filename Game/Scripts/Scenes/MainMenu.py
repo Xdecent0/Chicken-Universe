@@ -2,7 +2,7 @@ import tkinter as tk
 import random
 from Data.GameData import GameData
 
-AVAILABLE_COLORS = ["Red", "Blue", "Green", "Yellow", "Purple", "Orange", "Pink", "Cyan", "Magenta", "Brown", "Lime", "Teal", "Lavender", "Maroon", "Navy", "Olive", "Periwinkle", "Gold", "Indigo", "Silver", "Slate", "Turquoise", "Violet", "Beige", "Mint", "Peach", "Lilac", "Crimson", "Plum"]
+AVAILABLE_COLORS = ["Red", "Blue", "Green", "Yellow", "Purple", "Orange", "Pink", "Cyan", "Magenta", "Brown", "Lime", "Teal", "Lavender", "Maroon", "Navy", "Olive", "Periwinkle", "Gold", "Indigo", "Silver", "Turquoise", "Violet", "Beige", "Mint", "Lilac", "Crimson", "Plum"]
 
 game_data = GameData()
 game_data.load()
