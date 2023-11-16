@@ -7,6 +7,12 @@ import random
 game_data = GameData()
 game_data.load()
 
+def create_label(parent, text, font, image, compound, padx, pady):
+        label = tk.Label(parent, text=text, font=font, image=image, compound=compound)
+        label.image = image
+        label.pack(side="left", padx=padx, pady=pady)
+        return label
+
 class FlyingObjectGame:
     def __init__(self, root, start_game_callback):
         self.root = root
@@ -35,17 +41,9 @@ class FlyingObjectGame:
         self.back_button.pack(side="left", padx=10, pady=10)
 
         self.score = 0
-        self.score_label = tk.Label(self.button_frame, text=f"Score: {self.score}", font=("Helvetica", 18), image=score_icon, compound="left")
-        self.score_label.image = score_icon
-        self.score_label.pack(side="left", padx=10, pady=10)
-
-        self.lives_label = tk.Label(self.button_frame, text=f"Lives: {game_data.lives}", font=("Helvetica", 18), image=heart_icon, compound="left")
-        self.lives_label.image = heart_icon
-        self.lives_label.pack(side="left", padx=10, pady=10)
-
-        self.coins_label = tk.Label(self.button_frame, text=f"Coins: {game_data.coins}", font=("Helvetica", 18), image=coin_icon, compound="left")
-        self.coins_label.image = coin_icon
-        self.coins_label.pack(side="left", padx=10, pady=10)
+        self.score_label = create_label(self.button_frame, f"Score: {self.score}", ("Helvetica", 18), score_icon, "left", 10, 10)
+        self.lives_label = create_label(self.button_frame, f"Lives: {game_data.lives}", ("Helvetica", 18), heart_icon, "left", 10, 10)
+        self.coins_label = create_label(self.button_frame, f"Coins: {game_data.coins}", ("Helvetica", 18), coin_icon, "left", 10, 10)
 
         self.obstacles = []
         self.coins = []
