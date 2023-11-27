@@ -59,7 +59,7 @@ class MainMenu:
     def create_button(self, frame, text, command, image, width, height):
         button = tk.Button(frame, text=text, command=command, width=width, height=height, font=("Helvetica", 16), image=image, compound="left", bg = "maroon4", bd = 5, highlightcolor = "black")
         button.image = image
-        button.pack(pady=90)
+        button.pack(pady=50)
 
     def start_game(self):
         game_data.load()
