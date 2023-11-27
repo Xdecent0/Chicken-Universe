@@ -23,7 +23,9 @@ class FlyingObjectGame:
         self.player = Player(self.canvas, game_data.player_color, game_data.outline_color)
         self.player.create_player(160, 120, 200, 180, game_data.player_color, game_data.outline_color, 4)
 
-        root.bind("<Up>", self.player.move_up)
+        root.bind("<Up>", self.player.move_up)  
+        root.bind("<Right>", self.player.move_right)
+        root.bind("<Left>", self.player.move_left)
         root.bind("<Down>", self.player.move_down)
 
         root.focus_set()
