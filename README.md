@@ -6,6 +6,8 @@ Dodge obstacles and collect coins! Beat your best record.
 
 **Controls:**
 + Up arrow :arrow_up: - move the player upwards
++ Left arrow :arrow_left: - move the player left
++ Right arrow :arrow_right: - move the player right
 + Down arrow :arrow_down: - move the player downwards
 
 ![game](./Game/Assets/ScreenShots/game.png)
