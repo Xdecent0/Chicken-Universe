@@ -22,7 +22,7 @@ class Player:
             self.dy = 0
 
     def move_down(self, event):
-        if self.canvas.coords(self.player)[3] < 800:
+        if self.canvas.coords(self.player)[3] < 600:
             self.dy = 20
         else:
             self.dy = 0
@@ -51,8 +51,8 @@ class Obstacle:
         return photo_image
 
     def create_obstacle(self):
-        x = 1000
-        y = random.randint(10, 590 - self.height)
+        x = 900
+        y = random.randint(10, 500 - self.height)
         self.obstacle = self.canvas.create_image(x, y, image=self.image, anchor="nw")
 
     def move(self):
@@ -74,7 +74,7 @@ class Coin:
 
     def create_coin(self):
         x = 1000
-        y = random.randint(10, 590)
+        y = random.randint(10, 500)
         self.coin = self.canvas.create_image(x, y, image=self.image, anchor="nw")
 
     def move(self):

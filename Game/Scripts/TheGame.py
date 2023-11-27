@@ -17,7 +17,7 @@ class FlyingObjectGame:
     def __init__(self, root, start_game_callback):
         self.root = root
         self.start_game_callback = start_game_callback
-        self.canvas = tk.Canvas(root, width=1000, height=800, bg="lightblue")
+        self.canvas = tk.Canvas(root, width=900, height=600, bg="lightblue")
         self.canvas.pack()
 
         self.player = Player(self.canvas, game_data.player_color, game_data.outline_color)
@@ -151,8 +151,8 @@ class FlyingObjectGame:
         if self.player.score > game_data.highscore:
             game_data.highscore = self.player.score
         self.canvas.delete("all")
-        self.canvas.create_text(500, 400, text="You Lost", font=("Helvetica", 36), fill="red")
-        self.canvas.create_text(500, 450, text=f"Highscore: {game_data.highscore}", font=("Helvetica", 24), fill="blue")
+        self.canvas.create_text(450, 200, text="You Lost", font=("Helvetica", 36), fill="red")
+        self.canvas.create_text(450, 250, text=f"Highscore: {game_data.highscore}", font=("Helvetica", 24), fill="blue")
 
 if __name__ == "__main__":
     root = tk.Tk()
