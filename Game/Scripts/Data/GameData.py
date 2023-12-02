@@ -15,6 +15,7 @@ class GameData:
         self.lives = 1
         self.player_color = "purple"
         self.outline_color = "black"
+        self.name = "Player"
 
     def save(self):
         with open("./Game/Scripts/Data/game_data.pkl", "wb") as file:
@@ -29,8 +30,11 @@ class GameData:
                 self.lives = game_data.lives
                 self.player_color = game_data.player_color
                 self.outline_color = game_data.outline_color
+                self.name = game_data.name
         except (FileNotFoundError, EOFError):
             self._initialize()
 
     def reset(self):
+        current_name = self.name
         self._initialize()
+        self.name = current_name

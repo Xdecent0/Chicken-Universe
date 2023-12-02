@@ -1,6 +1,7 @@
 import tkinter as tk
 import random
 from Data.GameData import GameData
+from MenuUtils.menuUtils import AppMenu
 
 AVAILABLE_COLORS = ["Red", "Blue", "Green", "Yellow", "Purple", "Orange", "Pink", "Cyan", "Magenta", "Brown", "Lime", "Teal", "Lavender", "Maroon", "Navy", "Olive", "Gold", "Indigo", "Silver", "Turquoise", "Violet", "Beige", "Crimson", "Plum"]
 
@@ -87,6 +88,7 @@ class MainMenu:
 
         main_menu = MainMenu(self.root, self.start_game_callback)
 
+
 class ShopMenu:
     def __init__(self, root, return_callback, start_game_callback):
         self.root = root
@@ -117,7 +119,9 @@ class ShopMenu:
         self.root.title("Main Menu")
         for widget in self.root.winfo_children():
             widget.destroy()
-
+            
+        menuUtils = AppMenu(self.root, self.start_game_callback)
+        menuUtils.create_menu()
         main_menu = MainMenu(self.root, self.start_game_callback)
 
     def create_shop_button(self, frame, text, command, image):
