@@ -15,6 +15,7 @@ class AppMenu:
         menubar = Menu(self.root)
         self.root.config(menu=menubar)
 
+        # File Menu
         file_menu = Menu(menubar, tearoff=0)
         menubar.add_cascade(label="File", menu=file_menu)
 
@@ -23,10 +24,17 @@ class AppMenu:
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.root.destroy)
 
+        # Player Menu
         player_menu = Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Player", menu=player_menu)
 
         self.update_player_menu(player_menu)
+
+        # Info Menu
+        info_menu = Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Info", menu=info_menu)
+
+        info_menu.add_command(label="Get Information", command=self.show_info)
 
     def save_data(self):
         game_data.save()
@@ -47,3 +55,13 @@ class AppMenu:
             self.create_menu()
             game_data.save()
 
+    def show_info(self):
+        info_text = "Info:\n\n" \
+                    "Dodge obstacles, collect coins, and beat your record.\n\n" \
+                    "Controls:\n" \
+                    "Up arrow - move up\n" \
+                    "Down arrow - move down\n" \
+                    "Left arrow - move left\n" \
+                    "Right arrow - move right"
+
+        tk.messagebox.showinfo("Info", info_text)
