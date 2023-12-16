@@ -2,6 +2,7 @@ import tkinter as tk
 from Scenes.MainMenu import MainMenu
 from GameObjects.GameObject import Player, Obstacle, Coin
 from Data.GameData import GameData
+from MenuUtils.menuUtils import AppMenu
 import random
 
 game_data = GameData()

@@ -13,7 +13,12 @@ class MainMenu:
         self.root = root
         self.root.title("Main Menu")
 
+
+
         self.start_game_callback = start_game_callback
+
+        menuUtils = AppMenu(self.root, self.start_game_callback)
+        menuUtils.create_menu()
 
         self.main_frame = tk.Frame(root, bg="purple")
         self.main_frame.pack(fill=tk.BOTH, expand=True)
@@ -24,10 +29,11 @@ class MainMenu:
 
         left_frame = tk.Frame(self.main_frame, bg="purple")
         left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
 
         game_data.load()
 
-        self.create_labels(left_frame, game_data.get_highscore(), game_data.get_coins())
+        self.create_greeting(left_frame)
 
         right_frame = tk.Frame(self.main_frame, bg="purple")
         right_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -49,28 +55,40 @@ class MainMenu:
         highscore_icon = tk.PhotoImage(file="./Game/Assets/icons/score.png")
         coin_icon = tk.PhotoImage(file="./Game/Assets/Obstacle/coin.png")
 
-        self.highscore_label = tk.Label(labels_frame, text=f"Highscore: {highscore}", font=("Helvetica", 24), fg="black", bg="darkviolet", image=highscore_icon, compound="left")
-        self.highscore_label.image = highscore_icon
-        self.highscore_label.pack(pady=90, fill=tk.BOTH)
+        # self.highscore_label = tk.Label(labels_frame, text=f"Highscore: {highscore}", font=("Helvetica", 24), fg="black", bg="darkviolet", image=highscore_icon, compound="left")
+        # self.highscore_label.image = highscore_icon
+        # self.highscore_label.pack(pady=90, fill=tk.BOTH)
 
-        self.coins_label = tk.Label(labels_frame, text=f"Coins: {coins}", font=("Helvetica", 24), fg="black", bg="darkviolet", image=coin_icon, compound="left")
-        self.coins_label.image = coin_icon
-        self.coins_label.pack(pady=90, fill=tk.BOTH)
+        # self.coins_label = tk.Label(labels_frame, text=f"Coins: {coins}", font=("Helvetica", 24), fg="black", bg="darkviolet", image=coin_icon, compound="left")
+        # self.coins_label.image = coin_icon
+        # self.coins_label.pack(pady=90, fill=tk.BOTH)
 
     def create_button(self, frame, text, command, image, width, height):
         button = tk.Button(frame, text=text, command=command, width=width, height=height, font=("Helvetica", 16), image=image, compound="left", bg = "maroon4", bd = 5, highlightcolor = "black")
         button.image = image
         button.pack(pady=50)
+        
+
+    def create_greeting(self, frame):
+        greeting_label = tk.Label(frame, text="Hi! You can switch players in Player section.", font=("Helvetica", 24), fg="black", bg="darkviolet")
+        greeting_label.pack(pady=90)
+        greeting_label = tk.Label(frame, text="see all the information in Player section.", font=("Helvetica", 24), fg="black", bg="darkviolet")
+        greeting_label.pack(pady=130)
 
     def start_game(self):
         game_data.load()
         self.main_frame.destroy()
+        menuUtils = AppMenu(self.root, self.start_game_callback)
+        menuUtils.hide_menu()
         self.start_game_callback()
+
 
     def reset_player(self):
         game_data.reset()
         game_data.save()
-        self.update_player()
+        menuUtils = AppMenu(self.root, self.start_game_callback)
+        menuUtils.create_menu()
+        # self.update_player()
 
     def update_player(self):
         game_data.load()
@@ -107,11 +125,11 @@ class ShopMenu:
         
         game_data = GameData()
         game_data.load()
-        coin_icon = tk.PhotoImage(file="./Game/Assets/Obstacle/coin.png")
-        coin_label = tk.Label(self.shop_frame, text=f"Coins: {game_data.get_coins()}", font=("Helvetica", 16), image=coin_icon, compound="left", bg="purple")
-        coin_label.image = coin_icon
-        coin_label.pack(anchor="nw", padx=20, pady=20)
-        self.coin_label = coin_label
+        # coin_icon = tk.PhotoImage(file="./Game/Assets/Obstacle/coin.png")
+        # coin_label = tk.Label(self.shop_frame, text=f"Coins: {game_data.get_coins()}", font=("Helvetica", 16), image=coin_icon, compound="left", bg="purple")
+        # coin_label.image = coin_icon
+        # coin_label.pack(anchor="nw", padx=20, pady=20)
+        # self.coin_label = coin_label
 
         self.create_shop_buttons()
 
@@ -168,7 +186,9 @@ class ShopMenu:
             game_data.set_lives(current_lives + 1)
             game_data.set_coins(current_coins)
             game_data.save()
-            self.coin_label.config(text=f"Coins: {current_coins}")
+            # self.coin_label.config(text=f"Coins: {current_coins}")
+            menuUtils = AppMenu(self.root, self.start_game_callback)
+            menuUtils.create_menu()
         elif game_data.get_lives() >= 3:
             self.buy_extra_life_button.config(state=tk.DISABLED, text="Not Available")
 
@@ -179,7 +199,9 @@ class ShopMenu:
         game_data.set_coins(current_coins)
         game_data.save()
 
-        self.coin_label.config(text=f"Coins: {current_coins}")
+        # self.coin_label.config(text=f"Coins: {current_coins}")
+        menuUtils = AppMenu(self.root, self.start_game_callback)
+        menuUtils.create_menu()
 
     def buy_random_body_color(self):
         game_data.load()
@@ -194,7 +216,9 @@ class ShopMenu:
                 new_body_color = random.choice(AVAILABLE_COLORS)
             game_data.set_player_color(new_body_color)
             game_data.save()
-            self.coin_label.config(text=f"Coins: {current_coins}")
+            menuUtils = AppMenu(self.root, self.start_game_callback)
+            menuUtils.create_menu()
+            # self.coin_label.config(text=f"Coins: {current_coins}")
 
     def buy_random_outline_color(self):
         game_data.load()
@@ -209,6 +233,8 @@ class ShopMenu:
                 new_outline_color = random.choice(AVAILABLE_COLORS)
             game_data.set_outline_color(new_outline_color)
             game_data.save()
-            self.coin_label.config(text=f"Coins: {current_coins}")
+            # self.coin_label.config(text=f"Coins: {current_coins}")
+            menuUtils = AppMenu(self.root, self.start_game_callback)
+            menuUtils.create_menu()
 
 

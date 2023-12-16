@@ -43,17 +43,23 @@ class AppMenu:
         player_menu.delete(0, tk.END)
 
         player_menu.add_command(label=f"Player Name: {game_data.get_name()}", state=tk.DISABLED)
+        player_menu.add_command(label=f"Player Score: {game_data.get_highscore()}", state=tk.DISABLED)
+        player_menu.add_command(label=f"Player Money: {game_data.get_coins()}", state=tk.DISABLED)
 
         player_menu.add_separator()
-        # player_menu.add_command(label="Switch to 1 Slot", command=lambda: self.switch_and_update("Player1"))
-        # player_menu.add_command(label="Switch to 2 Slot", command=lambda: self.switch_and_update("Player2"))
-        # player_menu.add_command(label="Switch to 3 Slot", command=lambda: self.switch_and_update("Player3"))
+        player_menu.add_command(label="Switch to 1 Slot", command=lambda: self.switch_and_update("Player1"))
+        player_menu.add_command(label="Switch to 2 Slot", command=lambda: self.switch_and_update("Player2"))
+        player_menu.add_command(label="Switch to 3 Slot", command=lambda: self.switch_and_update("Player3"))
+        player_menu.add_separator()
         player_menu.add_command(label="Change Name", command=self.change_name_dialog)
 
-        # def switch_and_update(self, player_name):
-        #     game_data.switch_player(player_name)
-        #     self.create_menu()
-        #     game_data.save()
+    def hide_menu(self):
+        self.root.config(menu="")
+
+    def switch_and_update(self, player_name):
+            game_data.switch_player(player_name)
+            self.create_menu()
+            game_data.save()
 
     def change_name_dialog(self):
         new_name = simpledialog.askstring("Change Name", "Enter new player name:")
