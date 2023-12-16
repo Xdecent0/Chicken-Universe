@@ -107,3 +107,30 @@ class GameData:
     def get_outline_color(self):
         return self.players[self.current_player].outline_color
 
+    def set_coins(self, value):
+        self.players[self.current_player].coins = value
+
+    def set_highscore(self, value):
+        self.players[self.current_player].highscore = value
+
+    def set_lives(self, value):
+        self.players[self.current_player].lives = value
+
+    def set_name(self, value):
+        self.players[self.current_player].name = value
+
+    def set_player_color(self, value):
+        self.players[self.current_player].player_color = value
+
+    def set_outline_color(self, value):
+        self.players[self.current_player].outline_color = value
+    
+    def reset(self):
+        current_player = self.players[self.current_player]
+        current_player.highscore = 0
+        current_player.coins = 0
+        current_player.lives = 1
+        current_player.player_color = "purple"
+        current_player.outline_color = "black"
+
+

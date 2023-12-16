@@ -27,7 +27,7 @@ class MainMenu:
 
         game_data.load()
 
-        self.create_labels(left_frame, game_data.highscore, game_data.coins)
+        self.create_labels(left_frame, game_data.get_highscore(), game_data.get_coins())
 
         right_frame = tk.Frame(self.main_frame, bg="purple")
         right_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -74,8 +74,8 @@ class MainMenu:
 
     def update_player(self):
         game_data.load()
-        self.highscore_label.config(text=f"Highscore: {game_data.highscore}")
-        self.coins_label.config(text=f"Coins: {game_data.coins}")
+        self.highscore_label.config(text=f"Highscore: {game_data.get_highscore()}")
+        self.coins_label.config(text=f"Coins: {game_data.get_coins()}")
 
     def open_shop(self):
         self.main_frame.destroy()
@@ -108,7 +108,7 @@ class ShopMenu:
         game_data = GameData()
         game_data.load()
         coin_icon = tk.PhotoImage(file="./Game/Assets/Obstacle/coin.png")
-        coin_label = tk.Label(self.shop_frame, text=f"Coins: {game_data.coins}", font=("Helvetica", 16), image=coin_icon, compound="left", bg="purple")
+        coin_label = tk.Label(self.shop_frame, text=f"Coins: {game_data.get_coins()}", font=("Helvetica", 16), image=coin_icon, compound="left", bg="purple")
         coin_label.image = coin_icon
         coin_label.pack(anchor="nw", padx=20, pady=20)
         self.coin_label = coin_label
@@ -151,7 +151,7 @@ class ShopMenu:
         self.create_shop_button(buttons_frame, f"Buy Random Outline Color ({random_outline_color_price} Coins)", self.buy_random_outline_color, buy_random_outline_color_icon).pack(side="top", pady=20)
 
         self.buy_extra_life_button = self.create_shop_button(buttons_frame, f"Buy Extra Life ({extra_life_price} Coins)", self.buy_extra_life, buy_extra_life_icon)
-        if game_data.lives >= 3:
+        if  game_data.get_lives() >= 3:
             self.buy_extra_life_button.config(state=tk.DISABLED, text="Not Available")
         self.buy_extra_life_button.pack(side="top", pady=20)
 
@@ -159,54 +159,55 @@ class ShopMenu:
 
     def buy_extra_life(self):
         game_data.load()
-        current_coins = game_data.coins
+        current_coins = game_data.get_coins()
         life_price = 50
 
-        if current_coins >= life_price and game_data.lives < 3:
+        if current_coins >= life_price and game_data.get_lives() < 3:
             current_coins -= life_price
-            game_data.lives += 1
-            game_data.coins = current_coins
+            current_lives = game_data.get_lives()
+            game_data.set_lives(current_lives + 1)
+            game_data.set_coins(current_coins)
             game_data.save()
             self.coin_label.config(text=f"Coins: {current_coins}")
-        elif game_data.lives >= 3:
+        elif game_data.get_lives() >= 3:
             self.buy_extra_life_button.config(state=tk.DISABLED, text="Not Available")
 
     def add_100_coins(self):
         game_data.load()
-        current_coins = game_data.coins
+        current_coins = game_data.get_coins()
         current_coins += 100
-        game_data.coins = current_coins
+        game_data.set_coins(current_coins)
         game_data.save()
 
         self.coin_label.config(text=f"Coins: {current_coins}")
 
     def buy_random_body_color(self):
         game_data.load()
-        current_coins = game_data.coins
+        current_coins = game_data.get_coins()
         body_color_price = 30
 
         if current_coins >= body_color_price:
             current_coins -= body_color_price
-            game_data.coins = current_coins
+            game_data.set_coins(current_coins)
             new_body_color = random.choice(AVAILABLE_COLORS)
-            while new_body_color == game_data.player_color:
+            while new_body_color == game_data.get_player_color():
                 new_body_color = random.choice(AVAILABLE_COLORS)
-            game_data.player_color = new_body_color
+            game_data.set_player_color(new_body_color)
             game_data.save()
             self.coin_label.config(text=f"Coins: {current_coins}")
 
     def buy_random_outline_color(self):
         game_data.load()
-        current_coins = game_data.coins
+        current_coins = game_data.get_coins()
         outline_color_price = 40
 
         if current_coins >= outline_color_price:
             current_coins -= outline_color_price
-            game_data.coins = current_coins
+            game_data.set_coins(current_coins)
             new_outline_color = random.choice(AVAILABLE_COLORS)
-            while new_outline_color == game_data.outline_color:
+            while new_outline_color == game_data.get_outline_color():
                 new_outline_color = random.choice(AVAILABLE_COLORS)
-            game_data.outline_color = new_outline_color
+            game_data.set_outline_color(new_outline_color)
             game_data.save()
             self.coin_label.config(text=f"Coins: {current_coins}")
 

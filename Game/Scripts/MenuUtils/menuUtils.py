@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Menu, simpledialog
+from tkinter import Menu, simpledialog, messagebox
 from Data.GameData import GameData
 
 game_data = GameData()
@@ -40,18 +40,25 @@ class AppMenu:
         game_data.save()
 
     def update_player_menu(self, player_menu):
-        player_menu.delete(0, tk.END)  # Удаляем все элементы из меню
+        player_menu.delete(0, tk.END)
 
-        player_menu.add_command(label=f"Player Name: {game_data.name}", state=tk.DISABLED)
+        player_menu.add_command(label=f"Player Name: {game_data.get_name()}", state=tk.DISABLED)
 
         player_menu.add_separator()
-
+        # player_menu.add_command(label="Switch to 1 Slot", command=lambda: self.switch_and_update("Player1"))
+        # player_menu.add_command(label="Switch to 2 Slot", command=lambda: self.switch_and_update("Player2"))
+        # player_menu.add_command(label="Switch to 3 Slot", command=lambda: self.switch_and_update("Player3"))
         player_menu.add_command(label="Change Name", command=self.change_name_dialog)
+
+        # def switch_and_update(self, player_name):
+        #     game_data.switch_player(player_name)
+        #     self.create_menu()
+        #     game_data.save()
 
     def change_name_dialog(self):
         new_name = simpledialog.askstring("Change Name", "Enter new player name:")
         if new_name:
-            game_data.name = new_name
+            game_data.set_name(new_name)
             self.create_menu()
             game_data.save()
 
@@ -64,4 +71,4 @@ class AppMenu:
                     "Left arrow - move left\n" \
                     "Right arrow - move right"
 
-        tk.messagebox.showinfo("Info", info_text)
+        messagebox.showinfo("Info", info_text)

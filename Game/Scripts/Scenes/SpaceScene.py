@@ -21,8 +21,8 @@ class FlyingObjectGame:
         self.canvas = tk.Canvas(root, width=900, height=600, bg="lightblue")
         self.canvas.pack()
 
-        self.player = Player(self.canvas, game_data.player_color, game_data.outline_color)
-        self.player.create_player(160, 120, 200, 180, game_data.player_color, game_data.outline_color, 4)
+        self.player = Player(self.canvas, game_data.get_player_color(), game_data.get_outline_color())
+        self.player.create_player(160, 120, 200, 180, game_data.get_player_color(), game_data.get_outline_color(), 4)
 
         root.bind("<Up>", self.player.move_up)  
         root.bind("<Right>", self.player.move_right)
@@ -45,8 +45,8 @@ class FlyingObjectGame:
 
         self.score = 0
         self.score_label = create_label(self.button_frame, f"Score: {self.score}", ("Helvetica", 18), score_icon, "left", 10, 10)
-        self.lives_label = create_label(self.button_frame, f"Lives: {game_data.lives}", ("Helvetica", 18), heart_icon, "left", 10, 10)
-        self.coins_label = create_label(self.button_frame, f"Coins: {game_data.coins}", ("Helvetica", 18), coin_icon, "left", 10, 10)
+        self.lives_label = create_label(self.button_frame, f"Lives: {game_data.get_lives()}", ("Helvetica", 18), heart_icon, "left", 10, 10)
+        self.coins_label = create_label(self.button_frame, f"Coins: {game_data.get_coins()}", ("Helvetica", 18), coin_icon, "left", 10, 10)
 
         self.obstacles = []
         self.coins = []
@@ -141,8 +141,10 @@ class FlyingObjectGame:
         for coin in collected_coins:
             self.canvas.delete(coin.coin)
             self.coins.remove(coin)
-            game_data.coins += 1
-        self.coins_label.config(text=f"Coins: {game_data.coins}")
+            current_coins = game_data.get_coins()
+            game_data.set_coins(current_coins + 1)
+            
+        self.coins_label.config(text=f"Coins: {game_data.get_coins()}")
 
     def is_collision(self, box1, box2):
         x1, y1, x2, y2 = box1
@@ -152,8 +154,8 @@ class FlyingObjectGame:
     def end_game(self):
         global highscore
         self.game_over = True
-        if self.player.score > game_data.highscore:
-            game_data.highscore = self.player.score
+        if self.player.score > game_data.get_highscore():
+            game_data.set_highscore(self.player.score)
         self.canvas.delete("all")
         self.canvas.create_text(450, 250, text="You Lost", font=("Helvetica", 36), fill="red")
-        self.canvas.create_text(450, 300, text=f"Highscore: {game_data.highscore}", font=("Helvetica", 24), fill="blue")
+        self.canvas.create_text(450, 300, text=f"Highscore: {game_data.get_highscore()}", font=("Helvetica", 24), fill="blue")

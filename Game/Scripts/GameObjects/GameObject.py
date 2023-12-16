@@ -9,10 +9,10 @@ class Player:
     def __init__(self, canvas, color, outline_color):
         self.canvas = canvas
         self.player = None
-        self.lives = game_data.lives
+        self.lives = game_data.get_lives()
         self.score = 0
-        self.color = game_data.player_color
-        self.outline_color = game_data.outline_color
+        self.color = game_data.get_player_color()
+        self.outline_color = game_data.get_outline_color()
         self.dy = 0
         self.dx = 0
 
